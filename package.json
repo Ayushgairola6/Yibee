@@ -5,10 +5,7 @@
   "scripts": {
     "run":"node index.js",
     "start": "nodemon index.js",
-<<<<<<< HEAD
-=======
-    "run": "node index.js",
->>>>>>> b7efff1 (fresh code)
+
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,18 +14,14 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
-<<<<<<< HEAD
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.0",
-=======
+
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "firebase": "^11.0.1",
     "firebase-admin": "^13.0.0",
->>>>>>> b7efff1 (fresh code)
+
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.0",
     "multer": "^1.4.5-lts.1",
