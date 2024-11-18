@@ -1,8 +1,7 @@
 const admin = require('firebase-admin');
-const serviceAccount = process.env.lemon_json;
-
-
-
+const serviceAccount = require('./lemon-1ef21-firebase-adminsdk-6p3dl-0dac1590a4.json');
+const { storage } = require('../Config/firebaseConfig.js');
+const { ref, uploadBytes, deleteObject, getDownloadURL, getStream } = require('firebase/storage');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     storageBucket: "lemon-1ef21.appspot.com"
