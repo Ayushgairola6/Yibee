@@ -1,0 +1,67 @@
+[
+    {
+        "title": "Back In Black",
+        "artist": "Ac/Dc",
+        "album": "",
+        "url": "Backend/songs/Back In Black Iron Man(MP3_128K).mp3",
+        "duration": 254,
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm28_ndE69QcCu51FphT6LBLwOirJuwOSoDQ&s",
+        "likes": 0,
+        "streams": 2
+    },
+    {
+        "title": "Carnival",
+        "artist": "Kanye West , Ty Dolla Sign ft Playboi Carti and Rich the kid",
+        "album": "",
+        "url": "https://firebasestorage.googleapis.com/v0/b/lemon-1ef21.appspot.com/o/CARNIVAL%20-%20Kanye%20West%20_%20Ty%20Dolla%20_ign%20(ft%20Playboi%20Carti%20_%20Rich%20The%20Kid)%20(lyrics)(MP3_128K).mp3?alt=media&token=5edd0f35-596e-42e2-8431-e2ce7ab4c8cd",
+        "duration": 264,
+        "thumbnail": "https://i.iheart.com/v3/catalog/album/279421951?ops=fit(480%2C480)",
+        "likes": 0,
+        "streams": 2
+    },   {
+        "title": "Take a look around",
+        "artist": "Limp bizkit",
+        "album": "",
+        "url": "https://firebasestorage.googleapis.com/v0/b/lemon-1ef21.appspot.com/o/%E2%99%AA%20Limp%20bizkit%20-%20Take%20a%20look%20around(MP3_128K).mp3?alt=media&token=18e13b6d-6e29-4cbb-ad61-2882548e5774",
+        "duration": 314,
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8gPh4ZSDmUufEvWndH9R2zokX6Xv0znsT0A&s",
+        "likes": 0,
+        "streams": 2
+    }, {
+        "title": "Fuel",
+        "artist": "Eminem ft JID",
+        "album": "",
+        "url": "https://firebasestorage.googleapis.com/v0/b/lemon-1ef21.appspot.com/o/Eminem%20-%20Fuel%20(feat.%20JID)%20%5BOfficial%20Audio%5D(MP3_128K).mp3?alt=media&token=22c74b12-7f6d-4d23-aa91-b81f1697bca4",
+        "duration": 213,
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVTzg3RYNtqh4zn7kWqrSx2_OjhyGzYRi5Fw&s",
+        "likes": 0,
+        "streams": 2
+    }, {
+        "title": "Luv Bad Bitches",
+        "artist": "Future, Metro_Boomin",
+        "album": "",
+        "url": "https://firebasestorage.googleapis.com/v0/b/lemon-1ef21.appspot.com/o/Future_%20Metro%20Boomin_%20Brownstone%20-%20Luv%20Bad%20Bitches%20(Official%20Audio)(MP3_128K).mp3?alt=media&token=cb4f3ef6-9a72-481b-b427-448c8a8d9f45",
+        "duration": 197,
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYlQA3NNybb6wNXfcgYNGrjolGcSpWX4bmFw&s",
+        "likes": 0,
+        "streams": 2
+    }, {
+        "title": "Like That",
+        "artist": "Kendrick Lamar ft Future and Metro_Boomin",
+        "album": "",
+        "url": "Backend/songs/Future_ Metro Boomin_ Kendrick Lamar - Like That (Official Audio)(MP3_128K).mp3",
+        "duration": 269,
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2l5IQZfnxqHY5-ox_77cdoatjETsjynyiOg&s",
+        "likes": 0,
+        "streams": 2
+    }, {
+        "title": "I Like You",
+        "artist": "Post Malone ft.Doja Cat",
+        "album": "",
+        "url": "Backend/songs/Post Malone - I Like You (A Happier Song) w. Doja Cat [Official Music Video](MP3_128K).mp3",
+        "duration": 197,
+        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQak5m1DhYDlAbSztH-Rq_ZkiQnIcM_mljggA&s",
+        "likes": 0,
+        "streams": 0
+    }
+]

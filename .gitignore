@@ -1,0 +1,17 @@
+.env
+node_modules/
+npm-debug-log
+yarn-error.log
+package-lock.json
+Thumbs.debug
+.vscode/
+.idea/
+.sublime-project
+<<<<<<< HEAD
+.sublime-workspace
+=======
+.sublime-workspace
+.vercel
+.Backend\Config\lemon-1ef21-firebase-adminsdk-6p3dl-0dac1590a4.json
+Config/lemon-1ef21-firebase-adminsdk-6p3dl-0dac1590a4.json
+>>>>>>> b7efff1 (fresh code)
