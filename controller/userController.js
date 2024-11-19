@@ -64,7 +64,7 @@ async function UpdateUser(req, res, next) {
     const image = req.file ;
     const user = await User.findById(id);
     
-    if (user.image !== "") {
+    if (user.image.startsWith("lemon-1ef21.appspot.com") ) {
       await deleteImage(user.image, 'ProfilePictures')
     }
     const imageUrl = await uploadToFirebase(image?image:"", 'ProfilePictures')
