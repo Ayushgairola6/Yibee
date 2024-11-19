@@ -27,7 +27,7 @@ App.use(cors());
 
 App.use(bodyParser.json());
 App.use(bodyParser.urlencoded({ extented: true }));
-App.use("/", Route3.route.authRouter);
+App.use("/auth", Route3.route.authRouter);
 App.use('/api', Route1.route.musicRouter);
 
 
