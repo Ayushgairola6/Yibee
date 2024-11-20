@@ -27,16 +27,20 @@ App.use(cors());
 
 App.use(bodyParser.json());
 App.use(bodyParser.urlencoded({ extented: true }));
-App.use("/auth", Route3.route.authRouter);
-App.use('/api', Route1.route.musicRouter);
+App.use("api/auth", Route3.route.authRouter);
+App.use('api/music', Route1.route.musicRouter);
 
 
-App.use('/account', auth.data.authMiddleware, Route2.route.userRouter);
-App.use("/feed", auth.data.authMiddleware, Route4.Route.postRouter);
+App.use('api/account', auth.data.authMiddleware, Route2.route.userRouter);
+App.use("api/feed", auth.data.authMiddleware, Route4.Route.postRouter);
 
 
-
-App.listen(8080, () => {
-    console.log("Server Connected");
-
+App.get('/',(req,res)=>{
+    res.send("api is working correctly");
 });
+
+module.exports = App;
+// App.listen(8080, () => {
+//     console.log("Server Connected");
+
+// });
