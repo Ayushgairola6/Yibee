@@ -40,7 +40,7 @@ App.get('/',(req,res)=>{
 });
 
 module.exports = App;
-// App.listen(8080, () => {
-//     console.log("Server Connected");
+App.listen(8080, () => {
+    console.log("Server Connected");
 
-// });
+});

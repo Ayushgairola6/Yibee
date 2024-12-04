@@ -77,6 +77,8 @@ async function LikeASong(req, res, next) {
 async function FindSpecificSong(req, res) {
   try {
     const song = await SONG.find({ genre: req.params.genre });
+    
+
     if (!song) {
       console.log("this category doesn't exist");
       return res.status(401).json({message:"this category doesn't exist"});
