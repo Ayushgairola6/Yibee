@@ -23,7 +23,7 @@ const server = http.createServer(App);
 // configuration of cors policy to be able to use server both on localhost and hosted frontend
 const allowedOrigins = [
     'http://localhost:5173',
-    'https://yibee-frontend.vercel.app/'
+    'https://yibee-frontend-yibee.vercel.app/'
 ]
 
 
@@ -42,8 +42,8 @@ const corsOptions = {
 }
 
 //MIDDLEWARES WITH ROUTES SETUP WITH SERVER TO SEND DATA
-App.use(cors());
-// App.options('*', cors(corsOptions)); // Preflight handling
+App.use(cors(corsOptions));
+App.options('*', cors(corsOptions)); // Preflight handling
 App.use(bodyParser.json());
 App.use(bodyParser.urlencoded({ extented: true }));
 App.use("/auth", Route3.route.authRouter);
