@@ -76,8 +76,8 @@ App.get('/', (req, res) => {
     res.send("api is working correctly");
 });
 
-module.exports = App;
+// module.exports = App;
 
-// App.listen(8080,()=>{
-//     "server started";
-// })
+App.listen(8080,()=>{
+    "server started";
+})
