@@ -12,10 +12,10 @@ const http = require('http');
 const socketIo = require('socket.io');
 //above
 const bodyParser = require('body-parser');
-const Route1 = require(`../Router/musicRouter`);
-const Route2 = require("../Router/userRouter");
-const Route3 = require("../Router/authRouter");
-const Route4 = require("../Router/postRouter");
+const Route1 = require(`./Router/musicRouter`);
+const Route2 = require("./Router/userRouter");
+const Route3 = require("./Router/authRouter");
+const Route4 = require("./Router/postRouter");
 
 
 const server = http.createServer(App);
@@ -42,8 +42,8 @@ const corsOptions = {
 }
 
 //MIDDLEWARES WITH ROUTES SETUP WITH SERVER TO SEND DATA
-App.use(cors(corsOptions));
-App.options('*', cors(corsOptions)); // Preflight handling
+App.use(cors());
+// App.options('*', cors(corsOptions)); // Preflight handling
 App.use(bodyParser.json());
 App.use(bodyParser.urlencoded({ extented: true }));
 App.use("/auth", Route3.route.authRouter);
