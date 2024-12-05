@@ -21,7 +21,7 @@ const Route4 = require("./Router/postRouter");
 const server = http.createServer(App);
 
 const allowedOrigins = [
-    'http://localhost:8080',
+    'http://localhost:5173',
     'https://react-yibee.vercel.app'
 ]
 
