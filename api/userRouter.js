@@ -1,6 +1,6 @@
 const express = require("express")
 const userRouter = express.Router();
-const userController = require(".../controller/userController.js")
+const userController = require("../controller/userController.js")
 
 // setting up the routes for the music
 

@@ -1,6 +1,6 @@
 const express = require("express")
 const musicRouter = express.Router();
-const musicController = require(".../controller/Musiccontroller")
+const musicController = require("../controller/Musiccontroller")
 
 // setting up the routes for the music
 
