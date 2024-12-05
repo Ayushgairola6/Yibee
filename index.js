@@ -23,8 +23,10 @@ const server = http.createServer(App);
 // configuration of cors policy to be able to use server both on localhost and hosted frontend
 const allowedOrigins = [
     'http://localhost:5173',
-    'https://yibee-frontend-yibee.vercel.app/',
-    'https://yibee-frontend.vercel.app'
+    'https://yibee-frontend-yibee.vercel.app',
+    'https://yibee-frontend.vercel.app',
+    'https://yibee-frontend-ayushgairola6-yibee.vercel.app',
+    'https://yibee-frontend-jlsvqf5ri-yibee.vercel.app/'
 ]
 
 
@@ -44,9 +46,24 @@ const corsOptions = {
 
 //MIDDLEWARES WITH ROUTES SETUP WITH SERVER TO SEND DATA
 App.use(cors(corsOptions));
-App.options('*', cors(corsOptions)); // Preflight handling
+//prefligth options
+App.options('*', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.sendStatus(204); // No content
+});
+
 App.use(bodyParser.json());
 App.use(bodyParser.urlencoded({ extented: true }));
+// debugging
+App.use((req, res, next) => {
+    console.log(`Incoming request from origin: ${req.headers.origin}`);
+    console.log(`Method: ${req.method}`);
+    next();
+});
+
 App.use("/auth", Route3.route.authRouter);
 App.use('/music', Route1.route.musicRouter);
 
