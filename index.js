@@ -20,10 +20,28 @@ const Route4 = require("./Router/postRouter");
 
 const server = http.createServer(App);
 
+const allowedOrigins = [
+    'http://localhost:8080',
+    'https://react-yibee.vercel.app'
+]
 
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin ||
+            allowedOrigins.indexOf(origin) !== -1
+        ) {
+            callback(null, true)
+        } else {
+            callback(new Error('CORS policy:Origin not allowed'), false);
+        }
+    },
+    methods:'GET,POST,PATCH,DELETE',
+    allowedHeaders:`Content-Type,Authorization`
+}
 
 //MIDDLEWARES WITH ROUTES SETUP WITH SERVER TO SEND DATA
-App.use(cors());
+App.use(cors(corsOptions));
 
 App.use(bodyParser.json());
 App.use(bodyParser.urlencoded({ extented: true }));
