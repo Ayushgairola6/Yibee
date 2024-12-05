@@ -22,7 +22,7 @@ const server = http.createServer(App);
 
 const allowedOrigins = [
     'http://localhost:5173',
-    'https://react-yibee.vercel.app'
+    'https://yibee-frontend.vercel.app'
 ]
 
 
