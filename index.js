@@ -64,20 +64,20 @@ App.use((req, res, next) => {
     next();
 });
 
-App.use("/auth", Route3.route.authRouter);
-App.use('/music', Route1.route.musicRouter);
+App.use("/api/auth", Route3.route.authRouter);
+App.use('/api/music', Route1.route.musicRouter);
 
 
-App.use('/account', auth.data.authMiddleware, Route2.route.userRouter);
-App.use("/feed", auth.data.authMiddleware, Route4.Route.postRouter);
+App.use('/api/account', auth.data.authMiddleware, Route2.route.userRouter);
+App.use("/api/feed", auth.data.authMiddleware, Route4.Route.postRouter);
 
 
 App.get('/', (req, res) => {
     res.send("api is working correctly");
 });
 
-// module.exports = App;
+module.exports = App;
 
-App.listen(8080,()=>{
-    "server started";
-})
+// App.listen(8080,()=>{
+//     "server started";
+// })

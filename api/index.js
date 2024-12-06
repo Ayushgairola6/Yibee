@@ -12,10 +12,10 @@ const http = require('http');
 const socketIo = require('socket.io');
 //above
 const bodyParser = require('body-parser');
-const Route1 = require(`../Router/musicRouter`);
-const Route2 = require("../Router/userRouter");
-const Route3 = require("../Router/authRouter");
-const Route4 = require("../Router/postRouter");
+const Route1 = require(`./musicRouter`);
+const Route2 = require("./userRouter");
+const Route3 = require("./authRouter");
+const Route4 = require("./postRouter");
 
 
 const server = http.createServer(App);
@@ -65,12 +65,12 @@ App.use((req, res, next) => {
     next();
 });
 
-App.use("/auth", Route3.route.authRouter);
-App.use('/music', Route1.route.musicRouter);
+App.use("/api/auth", Route3.route.authRouter);
+App.use('/api/music', Route1.route.musicRouter);
 
 
-App.use('/account', auth.data.authMiddleware, Route2.route.userRouter);
-App.use("/feed", auth.data.authMiddleware, Route4.Route.postRouter);
+App.use('/api/account', auth.data.authMiddleware, Route2.route.userRouter);
+App.use("/api/feed", auth.data.authMiddleware, Route4.Route.postRouter);
 
 
 App.get('/', (req, res) => {
@@ -79,6 +79,6 @@ App.get('/', (req, res) => {
 
 module.exports = App;
 
-App.listen(8080,()=>{
-    "server started";
-})
+// App.listen(8080,()=>{
+//     "server started";
+// })
