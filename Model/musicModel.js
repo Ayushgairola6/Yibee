@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const db_url = process.env.DB_URL;
-
+const dotenv = require("dotenv").config();
 main().then(() => console.log("musicCollection connected")
 ).catch((err) => console.log(err));
 

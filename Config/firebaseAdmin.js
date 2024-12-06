@@ -1,4 +1,5 @@
 const admin = require('firebase-admin');
+const dotenv = require("dotenv").config();
 const serviceAccount = JSON.parse(process.env.Firebase_Admin_SDK);
 
 admin.initializeApp({
