@@ -26,7 +26,8 @@ const allowedOrigins = [
     'https://yibee-frontend-yibee.vercel.app',
     'https://yibee-frontend.vercel.app',
     'https://yibee-frontend-ayushgairola6-yibee.vercel.app',
-    'https://yibee-frontend-jlsvqf5ri-yibee.vercel.app/'
+    'https://yibee-frontend-jlsvqf5ri-yibee.vercel.app/',
+    'http://localhost:8080'
 ]
 
 
