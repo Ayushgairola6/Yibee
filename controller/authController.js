@@ -22,6 +22,9 @@ async function Signup(req, res) {
         if (newUser) {
             console.log(newUser);
         }
+        if(!newUser){
+            console.log('fields cant be empty')
+        }
         // Save user to database
         await newUser.save();
 
