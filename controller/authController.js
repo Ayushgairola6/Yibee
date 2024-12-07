@@ -9,13 +9,13 @@ async function Signup(req, res) {
     const { username, email, password } = req.body;
     try {
         // Check if user already exists
-        const existingUser = await User.findOne({ email });
+        const existingUser = await User.findOne({ email }).lean();
         if (existingUser) {
             return res.status(400).json({ message: "User already exists" });
         }
 
         // Hash password
-        const hashPassword = await bcrypt.hash(password, 10);
+        const hashPassword = await bcrypt.hash(password, 5);
 
         // Create new user
         const newUser = new User({ username, email, password: hashPassword });
@@ -46,7 +46,7 @@ const Login = async (req, res, next) => {
     console.log(email)
     console.log(password)
     try {
-        const user = await User.findOne( {email});
+        const user = await User.findOne( {email}).lean();
 
         if (user) {
             console.log(user)
