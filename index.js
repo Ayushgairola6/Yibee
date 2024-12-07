@@ -45,7 +45,7 @@ const corsOptions = {
 }
 
 //MIDDLEWARES WITH ROUTES SETUP WITH SERVER TO SEND DATA
-const cors = require('cors');
+
 
 App.use(cors({ origin: '*' })); 
 //prefligth options
