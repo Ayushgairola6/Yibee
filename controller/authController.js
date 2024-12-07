@@ -9,13 +9,13 @@ async function Signup(req, res) {
     const { username, email, password } = req.body;
     try {
         // Check if user already exists
-        const existingUser = await User.findOne({ email }).lean();
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: "User already exists" });
         }
 
         // Hash password
-        const hashPassword = await bcrypt.hash(password, 5);
+        const hashPassword = await bcrypt.hash(password, 10);
 
         // Create new user
         const newUser = new User({ username, email, password: hashPassword });
@@ -46,7 +46,7 @@ const Login = async (req, res, next) => {
     console.log(email)
     console.log(password)
     try {
-        const user = await User.findOne( {email}).lean();
+        const user = await User.findOne( {email});
 
         if (user) {
             console.log(user)
@@ -62,7 +62,6 @@ const Login = async (req, res, next) => {
             return res.status(200).json({ message: "Invalid Credentials" })
         }
         const token = jwt.sign({ userId: user._id, email: user.email }, key, { expiresIn: "1h" });
-        console.log(token)
         return res.status(200).json({
             token,
             user: {

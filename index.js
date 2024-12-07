@@ -4,7 +4,9 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const env = require("dotenv").config();
-
+require("dotenv").config();
+const serviceAccountjson = Buffer.from(process.env.SERVICE_ACCOUNT_KEY,'base64').toString('utf-8')
+const serviceAccount = JSON.parse(serviceAccountjson);
 const auth = require("./authMiddleware.js")
 
 //copied below
@@ -82,4 +84,5 @@ module.exports = App;
 
 App.listen(8080,()=>{
     "server started";
+    console.log(serviceAccount);
 })
