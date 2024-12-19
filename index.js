@@ -72,7 +72,7 @@ App.use("/api/auth", Route3.route.authRouter);
 App.use('/api/music', Route1.route.musicRouter);
 
 
-App.use('/api/account', auth.data.authMiddleware, Route2.route.userRouter);
+App.use('/api/account',  Route2.route.userRouter);
 App.use("/api/feed", Route4.Route.postRouter);
 
 
