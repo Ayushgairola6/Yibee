@@ -73,14 +73,14 @@ App.use('/api/music', Route1.route.musicRouter);
 
 
 App.use('/api/account', auth.data.authMiddleware, Route2.route.userRouter);
-App.use("/api/feed", auth.data.authMiddleware, Route4.Route.postRouter);
+App.use("/api/feed", Route4.Route.postRouter);
 
 
 App.get('/', (req, res) => {
     res.send("api is working correctly");
 });
 
-module.exports = App;
+// module.exports = App;
 
 App.listen(8080,()=>{
     "server started";
