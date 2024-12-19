@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const key = process.env.JWT_SECRET_KEY;
+
+// verification of the user token
 function authMiddleware(req, res, next) {
     const token = req.headers.authorization.split(" ")[1];
     if (!token) {
@@ -14,6 +16,7 @@ function authMiddleware(req, res, next) {
         req.user = decoded;  // You can access the user's info later using req.user
         next();
     });
+    return res.status(200).json("User is authenticated")
 }
 
 exports.data = { authMiddleware };
