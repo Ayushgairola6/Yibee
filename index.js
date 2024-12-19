@@ -74,7 +74,7 @@ App.use('/api/music', Route1.route.musicRouter);
 
 App.use('/api/account', Route2.route.userRouter);
 App.use("/api/feed", Route4.Route.postRouter);
-App.use("/api/authenticate",auth.data.authMiddleware)
+App.post("/api/authenticate",auth.data.authMiddleware)
 
 App.get('/', (req, res) => {
     res.send("api is working correctly");
