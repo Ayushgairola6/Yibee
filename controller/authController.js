@@ -34,7 +34,7 @@ async function Signup(req, res) {
             key, // Secret key for JWT
             { expiresIn: '2h' }
         );
-        console.log(newUser)
+        
         // Return the new user and token
         res.status(201).json({ newUser, token, message: "account created" });
     } catch (error) {

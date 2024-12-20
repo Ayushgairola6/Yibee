@@ -8,7 +8,7 @@ const key = process.env.JWT_SECRET_KEY;
 
 
 
-const {uploadToFirebase,deleteImage} = require('../Config/firebaseAdmin.js')
+const { uploadToFirebase, deleteImage } = require('../Config/firebaseAdmin.js')
 
 
 // configured multer to store media files in firebase using memory
@@ -23,7 +23,7 @@ async function getAllPosts(req, res, next) {
     try {
         const Posts = await Post.find().populate('author', 'username').lean();
         const ChangedPosts = JSON.stringify(Posts);
-        console.log("Sending Posts");
+        // console.log("Sending Posts");
         return res.status(200).send(ChangedPosts);
     } catch (err) {
         console.log(err);
@@ -34,33 +34,34 @@ async function getAllPosts(req, res, next) {
 
 // CREATING A POST
 
-async function createPost(req, res, next) {
+async function createPost(req, res) {
     try {
-        const currentUser = await User.findById(req.user.userId);
 
-        if (!currentUser) {
-            return res.status(404).json({ message: "User not found" });
-        }
-        res.setHeader("Content-Type", "multipart/form-data");
         // RQST DATA 
         const { Mood, title, caption, hashtags } = req.body;
         const token = req.headers.authorization.split(" ")[1]
         const Decoded = jwt.decode(token, key);
 
-        
         const author = Decoded.userId;
         if (!author) {
+            console.log("no author")
             return res.status(400).json({ message: "Author is required" })
         }
-
+        const currentUser = await User.findById(author);
+        // check if the user exists in db
+        if (!currentUser) {
+            return res.status(400).json("no user found");
+        }
         const images = req.file;
-        
-        const imageUrl = await uploadToFirebase(images?images:"", 'Posts')
+
+        const imageUrl = await uploadToFirebase(images ? images : "", 'Posts')
         const newPost = new Post({ Mood, title, caption, hashtags: hashtags ? hashtags.split(" ") : [], images: imageUrl, likes: 0, shares: 0, comments: 0, author: author });
 
+        // save the post
         await newPost.save();
         currentUser.posts.push(newPost._id);
-        const postt = await Post.findById(newPost._id).populate('author','username')
+        const postt = await Post.findById(newPost._id).populate('author', 'username')
+        // save the user
         await currentUser.save();
         return res.status(201).json(postt);
     } catch (error) {
@@ -73,7 +74,7 @@ async function createPost(req, res, next) {
 async function DeletePost(req, res, next) {
     try {
 
-        const token = req.headers.authorization?.split(" ")[1];
+        const token = req.headers.authorization.split(" ")[1];
         if (!token) return res.status(401).json({ message: "Unauthorized user" });
 
         let userId;
@@ -134,7 +135,7 @@ async function UpdatePost(req, res, next) {
 
             update = { $inc: { likes: 1 }, $addToSet: { likedBy: userLiked.userId } }
         }
-        const updatedPost = await Post.findByIdAndUpdate(id, update, { new: true }).populate("author",'username')
+        const updatedPost = await Post.findByIdAndUpdate(id, update, { new: true }).populate("author", 'username')
 
         if (!updatedPost) {
             return res.status(400).json({ error: "no post found" })

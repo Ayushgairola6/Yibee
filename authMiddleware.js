@@ -20,7 +20,7 @@ function authMiddleware(req, res, next) {
         }
 
         console.log("User is authenticated");
-
+         
         // Proceed to the next middleware/route handler
         next();
     });

@@ -5,8 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const env = require("dotenv").config();
 require("dotenv").config();
-const serviceAccountjson = Buffer.from(process.env.SERVICE_ACCOUNT_KEY,'base64').toString('utf-8')
-const serviceAccount = JSON.parse(serviceAccountjson);
+
 const auth = require("./authMiddleware.js")
 
 //copied below
@@ -28,45 +27,33 @@ const allowedOrigins = [
     'https://yibee-frontend-yibee.vercel.app',
     'https://yibee-frontend.vercel.app',
     'https://yibee-frontend-ayushgairola6-yibee.vercel.app',
-    'https://yibee-frontend-jlsvqf5ri-yibee.vercel.app/'
-]
+    'https://yibee-frontend-jlsvqf5ri-yibee.vercel.app'
+];
 
-
+// CORS options
 const corsOptions = {
     origin: function (origin, callback) {
-        if (!origin ||
-            allowedOrigins.indexOf(origin) !== -1
-        ) {
-            callback(null, true)
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
         } else {
-            callback(new Error('CORS policy:Origin not allowed'), false);
+            callback(new Error('CORS policy: Origin not allowed'));
         }
     },
-    methods:'GET,POST,PATCH,DELETE',
-    allowedHeaders:`Content-Type,Authorization`
-}
-
+    methods: 'GET,POST,PATCH,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type,Authorization',
+    credentials: true
+};
 //MIDDLEWARES WITH ROUTES SETUP WITH SERVER TO SEND DATA
 
 
-App.use(cors({ origin: '*' })); 
+App.use(cors(corsOptions)); 
 //prefligth options
-App.options('*', (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE,OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.sendStatus(204); // No content
-});
+
 
 App.use(bodyParser.json());
 App.use(bodyParser.urlencoded({ extented: true }));
 // debugging
-App.use((req, res, next) => {
-    console.log(`Incoming request from origin: ${req.headers.origin}`);
-    console.log(`Method: ${req.method}`);
-    next();
-});
+
 
 App.use("/api/auth", Route3.route.authRouter);
 App.use('/api/music', Route1.route.musicRouter);
@@ -74,7 +61,7 @@ App.use('/api/music', Route1.route.musicRouter);
 
 App.use('/api/account', Route2.route.userRouter);
 App.use("/api/feed", Route4.Route.postRouter);
-App.post("/api/authenticate",auth.data.authMiddleware)
+// App.post("/api/authenticate",auth.data.authMiddleware)
 
 App.get('/', (req, res) => {
     res.send("api is working correctly");
@@ -84,5 +71,4 @@ App.get('/', (req, res) => {
 
 App.listen(8080,()=>{
     "server started";
-    console.log(serviceAccount);
 })

@@ -66,7 +66,6 @@ async function LikeASong(req, res, next) {
     }
     const updatedUser = await User.findById(id).populate('playlist');
     res.status(200).json(updatedUser);
-    console.log(user);
   } catch (error) {
     res.status(500).json({ message: error });
   }
