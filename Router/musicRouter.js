@@ -9,5 +9,5 @@ musicRouter.get("/songs", musicController.path.getAllSongs)
   .patch('/song', musicController.path.LikeASong)
   .delete('/title', musicController.path.DeleteASong)
   .get('/genre/:genre', musicController.path.FindSpecificSong)
-
+  .get('/search/:query',musicController.path.Search_Song)
 exports.route = { musicRouter };

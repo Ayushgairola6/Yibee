@@ -76,17 +76,48 @@ async function LikeASong(req, res, next) {
 async function FindSpecificSong(req, res) {
   try {
     const song = await SONG.find({ genre: req.params.genre });
-    
+
 
     if (!song) {
       console.log("this category doesn't exist");
-      return res.status(401).json({message:"this category doesn't exist"});
+      return res.status(401).json({ message: "this category doesn't exist" });
     }
     else {
       console.log(song)
       return res.status(200).json(song);
     }
-console.log('this was causing the error')
+    console.log('this was causing the error')
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json(error);
+  }
+}
+
+// search music asked by user
+
+async function Search_Song(req, res) {
+  try {
+    const search_Query = req.params.query;
+    
+  
+
+ 
+    if (!search_Query || typeof search_Query !== "string") {
+      return res.status(400).json("invalid rqst")
+    }
+    // find the song
+    const song = await SONG.find({ title: search_Query.toUpperCase() });
+
+
+    if (!song) {
+      console.log("this song doesn't exist");
+      return res.status(401).json({ message: "this category doesn't exist" });
+    }
+    else {
+      console.log(song)
+      return res.status(200).json(song);
+    }
+    
   } catch (error) {
     console.log(error)
     return res.status(500).json(error);
@@ -100,4 +131,4 @@ function DeleteASong(req, res, next) {
   next()
 }
 
-exports.path = { getAllSongs, getOneSong, UploadASong, LikeASong, DeleteASong, FindSpecificSong }
+exports.path = { getAllSongs, getOneSong, UploadASong, LikeASong, DeleteASong, FindSpecificSong ,Search_Song}

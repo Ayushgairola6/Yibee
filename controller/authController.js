@@ -5,7 +5,7 @@ const User = userModel.user;
 const key = process.env.JWT_SECRET_KEY;
 
 // SIGNUP
-async function Signup(req, res) {
+async function Signup(req, res,next) {
     const { username, email, password } = req.body;
     try {
         // Check if user already exists
@@ -36,7 +36,7 @@ async function Signup(req, res) {
         );
         
         // Return the new user and token
-        res.status(201).json({ newUser, token, message: "account created" });
+       return res.status(201).json({ newUser, token, message: "account created" });
     } catch (error) {
         console.error("Error creating user:", error);
         res.status(500).json({ message: "Error creating user", error });
@@ -44,7 +44,7 @@ async function Signup(req, res) {
 }
 
 // LOGIN
-const Login = async (req, res, next) => {
+const Login = async (req, res) => {
     const { email, password } = req.body;
     console.log(email)
     console.log(password)
@@ -79,7 +79,6 @@ const Login = async (req, res, next) => {
         console.log(error)
         res.status(500).json({ message: "Server error" })
     }
-    next()
 }
 
 function DecodeToken(req, res, next) {
