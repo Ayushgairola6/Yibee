@@ -1,7 +1,7 @@
 
 function getGenres(req,res){
 
-    console.log('called')
+    ('called')
 }
 
 exports.data = {getGenres}

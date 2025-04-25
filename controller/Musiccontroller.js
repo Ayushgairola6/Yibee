@@ -3,14 +3,15 @@ const songModel = require('../Model/musicModel.js')
 const SONG = songModel.song;
 const userModel = require('../Model/userModel.js')
 const User = userModel.user
+
 const getAllSongs = async (req, res, next) => {
   try {
     const songs = await SONG.aggregate([{ $sample: { size: 1 } }]);
-    // console.log('sending songs', songs )
+    // ('sending songs', songs )
     res.setHeader("Content-Type", 'application/json')
     res.json(songs)
   } catch (err) {
-    console.log(err)
+    (err)
     res.status(500).json({ message: err.message })
 
   }
@@ -44,12 +45,10 @@ function UploadASong(req, res, next) {
 }
 
 async function LikeASong(req, res, next) {
-  const song = req.body;
-  console.log(song)
-  const token = req.headers.authorization.split(' ')[1];
   try {
-    const decodedToken = jwt.decode(token);
-    const id = decodedToken.userId;
+
+    const id = req.user.userId;
+    const song = req.body;
 
     const search = await User.findById(id);
     const isAdded = search.playlist.includes(song._id);
@@ -79,16 +78,16 @@ async function FindSpecificSong(req, res) {
 
 
     if (!song) {
-      console.log("this category doesn't exist");
+      ("this category doesn't exist");
       return res.status(401).json({ message: "this category doesn't exist" });
     }
     else {
-      console.log(song)
+      (song)
       return res.status(200).json(song);
     }
-    console.log('this was causing the error')
+    ('this was causing the error')
   } catch (error) {
-    console.log(error)
+    (error)
     return res.status(500).json(error);
   }
 }
@@ -98,10 +97,8 @@ async function FindSpecificSong(req, res) {
 async function Search_Song(req, res) {
   try {
     const search_Query = req.params.query;
-    
-  
 
- 
+
     if (!search_Query || typeof search_Query !== "string") {
       return res.status(400).json("invalid rqst")
     }
@@ -110,16 +107,13 @@ async function Search_Song(req, res) {
 
 
     if (!song) {
-      console.log("this song doesn't exist");
+      ("this song doesn't exist");
       return res.status(401).json({ message: "this category doesn't exist" });
     }
-    else {
-      console.log(song)
-      return res.status(200).json(song);
-    }
-    
+    return res.json(song)
+
   } catch (error) {
-    console.log(error)
+    (error)
     return res.status(500).json(error);
   }
 }
@@ -131,4 +125,4 @@ function DeleteASong(req, res, next) {
   next()
 }
 
-exports.path = { getAllSongs, getOneSong, UploadASong, LikeASong, DeleteASong, FindSpecificSong ,Search_Song}
+exports.path = { getAllSongs, getOneSong, UploadASong, LikeASong, DeleteASong, FindSpecificSong, Search_Song }

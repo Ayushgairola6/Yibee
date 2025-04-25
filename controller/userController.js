@@ -19,7 +19,7 @@ const getAllUsers = async (req, res, next) => {
     res.send((users));;
     next()
   } catch (err) {
-    console.log(err)
+    (err)
     res.status(500).json({ message: err.message });
 
   }
@@ -27,20 +27,14 @@ const getAllUsers = async (req, res, next) => {
 
 async function getOneUser(req, res) {
   try {
-    const token = req.headers.authorization.split(" ")[1];
-    if (!token) {
-
-      res.status(400).json(error)
-    }
-    const decoded = await jwt.decode(token);
-    const id = decoded.userId;
+    const id = req.user.userId
     if (!id) {
       return res.status(401).json({ message: "User not found" })
     }
     const CurrentUser = await User.findById(id).populate('posts').populate('playlist').lean();
     return res.status(200).json(CurrentUser);
   } catch (error) {
-    console.log(error)
+    (error)
     return res.status(400).json(error)
   }
 }
@@ -49,67 +43,63 @@ async function getOneUser(req, res) {
 // UPDATING THE DETAILS OF A USER /
 async function UpdateUser(req, res, next) {
   try {
-    const token = req.headers.authorization.split(' ')[1];
-    if (!token) {
-      console.log('no token');
-      return res.status(401).send('No token found')
-    }
-    const decoded = await jwt.decode(token);
-    const id = decoded.userId;
+    const id = req.user.userId
+
     if (!id) {
-      console.log('User not found')
+      ('User not found')
       return res.status(200).json({ message: "User not found" })
     }
 
-    const image = req.file ;
+    const image = req.file;
     const user = await User.findById(id);
-    
-    if (user.image.startsWith("lemon-1ef21.appspot.com") ) {
+
+    if (user.image.startsWith("lemon-1ef21.appspot.com")) {
       await deleteImage(user.image, 'ProfilePictures')
     }
-    const imageUrl = await uploadToFirebase(image?image:"", 'ProfilePictures')
-
+    const imageUrl = await uploadToFirebase(image ? image : "", 'ProfilePictures')
+    if (!imageUrl) {
+      return res.status(400).json({ message: "Please try again later" });
+    }
     const CurrentUser = await User.findByIdAndUpdate(id, { image: imageUrl });
-  
 
-    await res.status(200).json(CurrentUser);
+    if(!CurrentUser)return res.status(404).json({message:"User not found"});
+
+    await res.status(200).json({message:"done"});
   } catch (error) {
-    console.log(error)
+    (error)
     return res.status(400).json(error)
   }
 }
 
 async function AddCoverPhoto(req, res, next) {
   try {
-    const token = req.headers.authorization.split(' ')[1];
-    if (!token) {
-      console.log('no token');
-      return res.status(401).send('No account found')
-    }
-    const decoded = await jwt.decode(token);
-    const id = decoded.userId;
+    const id = req.user.userId
     if (!id) {
-      console.log('User not found')
+      ('User not found')
       return res.status(200).json({ message: "User not found" })
     }
 
 
-    const Cover = req.file 
-   if(!Cover){
-    console.log('no image')
-    return res.status(400).send('no image found')
-   }
+    const Cover = req.file
+    if (!Cover) {
+      ('no image')
+      return res.status(400).send('no image found')
+    }
 
-     const user = await User.findById(id);
+    const user = await User.findById(id);
     if (user.coverPhoto !== "") {
       await deleteImage(user.coverPhoto, 'CoverPhotos')
     }
-    const imageUrl = await uploadToFirebase(Cover?Cover:"", "CoverPhotos");
-
+    const imageUrl = await uploadToFirebase(Cover ? Cover : "", "CoverPhotos");
+    if (!imageUrl) {
+      return res.status(400).json({ message: "Please try again later" });
+    }
     const UpdatedUser = await User.findByIdAndUpdate(id, { coverPhoto: imageUrl });
-    await res.status(200).json(UpdatedUser);
+    if(!UpdatedUser)return res.status(404).json({message:"User not found"});
+
+    await res.status(200).json({message:"done"});
   } catch (error) {
-    console.log(error)
+    (error)
     return res.status(400).json(error)
   }
 }

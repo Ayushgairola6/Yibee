@@ -3,11 +3,15 @@ const bcrypt = require("bcrypt");
 const userModel = require('../Model/userModel');
 const User = userModel.user;
 const key = process.env.JWT_SECRET_KEY;
-
+require("dotenv").config();
 // SIGNUP
-async function Signup(req, res,next) {
+async function Signup(req, res, next) {
     const { username, email, password } = req.body;
     try {
+
+        if (!username || !email || !password) {
+            return res.status(400).json({ message: "All fields are mandatory" })
+        }
         // Check if user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -19,11 +23,9 @@ async function Signup(req, res,next) {
 
         // Create new user
         const newUser = new User({ username, email, password: hashPassword });
-        if (newUser) {
-            console.log(newUser);
-        }
-        if(!newUser){
-            console.log('fields cant be empty')
+
+        if (!newUser) {
+            ('fields cant be empty')
         }
         // Save user to database
         await newUser.save();
@@ -34,9 +36,9 @@ async function Signup(req, res,next) {
             key, // Secret key for JWT
             { expiresIn: '2h' }
         );
-        
+
         // Return the new user and token
-       return res.status(201).json({ newUser, token, message: "account created" });
+        return res.status(201).json({ newUser, token, message: "account created" });
     } catch (error) {
         console.error("Error creating user:", error);
         res.status(500).json({ message: "Error creating user", error });
@@ -45,57 +47,54 @@ async function Signup(req, res,next) {
 
 // LOGIN
 const Login = async (req, res) => {
-    const { email, password } = req.body;
-    console.log(email)
-    console.log(password)
+
     try {
-        const user = await User.findOne( {email});
+        const { email, password } = req.body;
 
-        if (user) {
-            console.log(user)
+        if (!email || !password) {
+            return res.status(400).json({ message: "All fields are mandatory" });
         }
 
+        const user = await User.findOne({ email });
         if (!user) {
-            console.log("user not found in login method")
-            return res.status(200).json({ message: "user not found" });
+            return res.status(404).json({ message: "User not found" });
         }
+
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            console.log("passoword doesnt match in login")
-            return res.status(200).json({ message: "Invalid Credentials" })
+            return res.status(401).json({ message: "Invalid Password!" });
         }
-        const token = jwt.sign({ userId: user._id, email: user.email }, key, { expiresIn: "1h" });
-        return res.status(200).json({
-            token,
-            user: {
-                id: user._id,
-                email: user.email,
-                username: user.username,
-                isAdmin: user.isAdmin
 
-            }
-        })
+        const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
+
+        res.cookie('Yibee_authToken', token, {
+            httpOnly: true,  // Prevent XSS attacks
+            secure: process.env.NODE_ENV === "production",  // Enable only in HTTPS environments
+            maxAge: 3600000
+        });
+
+        return res.json({ token });
+
     } catch (error) {
-        console.log(error)
+        (error)
         res.status(500).json({ message: "Server error" })
     }
 }
 
-function DecodeToken(req, res, next) {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
-        return res.status(401).json({ message: "no token available" })
-    }
+function UpdateState(req, res) {
 
-    const token = authHeader.split(' ')[1];
     try {
-        const decodedToken = jwt.verify(token, key)
-        req.userId = decodedToken.userId;
-        console.log(decodedToken)
-        next();
+        ("yha the code phoch gaya", req.user)
+
+        if (!req.user) {
+            return res.status(400).json({ message: "Unauthorized" })
+        } else {
+            return res.json({ message: "Authorized" });
+        }
+
     } catch (err) {
         return res.status(403).json({ message: "invalid or expired token " })
     }
 
 }
-exports.data = { Signup, Login, DecodeToken };
+exports.data = { Signup, Login, UpdateState };

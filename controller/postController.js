@@ -23,10 +23,10 @@ async function getAllPosts(req, res, next) {
     try {
         const Posts = await Post.find().populate('author', 'username').lean();
         const ChangedPosts = JSON.stringify(Posts);
-        // console.log("Sending Posts");
+        // ("Sending Posts");
         return res.status(200).send(ChangedPosts);
     } catch (err) {
-        console.log(err);
+        (err);
         res.status(500).json({ message: "Can't fetch posts at the moment" })
     }
 
@@ -39,12 +39,10 @@ async function createPost(req, res) {
 
         // RQST DATA 
         const { Mood, title, caption, hashtags } = req.body;
-        const token = req.headers.authorization.split(" ")[1]
-        const Decoded = jwt.decode(token, key);
 
-        const author = Decoded.userId;
+        const author = req.user.userId
         if (!author) {
-            console.log("no author")
+            ("no author")
             return res.status(400).json({ message: "Author is required" })
         }
         const currentUser = await User.findById(author);
@@ -74,19 +72,11 @@ async function createPost(req, res) {
 async function DeletePost(req, res, next) {
     try {
 
-        const token = req.headers.authorization.split(" ")[1];
-        if (!token) return res.status(401).json({ message: "Unauthorized user" });
-
-        let userId;
-        try {
-            const decoded = jwt.verify(token, key);
-            userId = decoded.userId;
-        } catch (err) {
-            return res.status(403).json({ message: "Invalid token" });
-        }
+        const userId = req.user.userId
 
         const id = req.params.id;
-        if (!id) return res.status(400).json({ message: "Post ID is required" });
+        // console.log(id)
+        if (!id || typeof id !== "string") return res.status(400).json({ message: "Invalid post_id" });
 
         const postToDelete = await Post.findByIdAndDelete(id);
         if (!postToDelete) return res.status(404).json({ message: "Post not found" });
@@ -96,7 +86,7 @@ async function DeletePost(req, res, next) {
         }
 
         await User.findByIdAndUpdate(userId, { $pull: { posts: id } });
-        return res.status(200).json(postToDelete);
+        return res.status(200).json({message:"Post deleted"});
     } catch (error) {
         console.error("Error in DeletePost:", error);
         return res.status(500).json({ message: "Error deleting post", error: error.message });
@@ -110,9 +100,8 @@ async function DeletePost(req, res, next) {
 async function UpdatePost(req, res, next) {
 
     try {
-        const auth = await req.headers.authorization.split(" ")[1];
         const id = req.params.id;
-        const userLiked = jwt.decode(auth);
+        const userLiked = req.user.userId
 
 
         if (!userLiked) {
@@ -128,7 +117,7 @@ async function UpdatePost(req, res, next) {
         // Checking wether the post is already liked by the user
 
         if (isLiked) {
-            console.log("isLiked")
+            ("isLiked")
             update = { $inc: { likes: -1 }, $pull: { likedBy: userLiked.userId }, new: true }
 
         } else {
@@ -144,7 +133,7 @@ async function UpdatePost(req, res, next) {
         // updated post is also returned by the server
         await res.status(200).json(updatedPost);
     } catch (error) {
-        console.log(error)
+        (error)
         return res.status(400).json(error)
     }
 }

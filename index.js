@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const env = require("dotenv").config();
 require("dotenv").config();
-
+const cookies = require("cookie-parser")
 const auth = require("./authMiddleware.js")
 
 //copied below
@@ -43,13 +43,12 @@ const corsOptions = {
     allowedHeaders: 'Content-Type,Authorization',
     credentials: true
 };
-//MIDDLEWARES WITH ROUTES SETUP WITH SERVER TO SEND DATA
 
 
 App.use(cors(corsOptions)); 
 //prefligth options
 
-
+App.use(cookies());
 App.use(bodyParser.json());
 App.use(bodyParser.urlencoded({ extented: true }));
 // debugging
@@ -69,6 +68,6 @@ App.get('/', (req, res) => {
 
 // module.exports = App;
 
-App.listen(8080,()=>{
+App.listen(process.env.PORT,()=>{
    console.log( "server started");
 })
