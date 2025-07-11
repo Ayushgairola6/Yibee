@@ -33,7 +33,7 @@ const allowedOrigins = [
 // CORS options
 const corsOptions = {
     origin:allowedOrigins ,
-    methods: 'GET,POST,PATCH,DELETE,OPTIONS',
+    methods: 'GET,POST,PATCH,DELETE,PUT,OPTIONS',
     allowedHeaders: 'Content-Type,Authorization',
     credentials: true
 };
